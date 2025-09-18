@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Meem - Art Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f5;
+            color: #1a1a1a;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-bg {
+            background-color: #e0dcd7;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 50%;
+            background-color: #1a1a1a;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .btn-primary {
+            background-color: #1a1a1a;
+            color: #f8f7f5;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #4a4a4a;
+        }
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body x-data="{ mobileMenuOpen: false }">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-bold font-serif">Studio Meem</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#store" class="nav-link">Art Store</a>
+                    <a href="#gallery" class="nav-link">Gallery</a>
+                    <a href="#artists" class="nav-link">Artists</a>
+                    <a href="#updates" class="nav-link">Updates</a>
+                    <a href="#blog" class="nav-link">Blog</a>
+                    <a href="#events" class="nav-link">Events</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                     <button @click="document.getElementById('search-modal').showModal()" class="text-gray-600 hover:text-black">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="#register" class="hidden md:inline-block px-4 py-2 rounded-md btn-primary">Register</a>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-2xl">
+                        <i class="fas" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" x-cloak class="md:hidden bg-white py-4 px-6 absolute top-full left-0 w-full shadow-lg"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform -translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform -translate-y-2">
+            <a href="#store" class="block py-2 text-center" @click="mobileMenuOpen = false">Art Store</a>
+            <a href="#gallery" class="block py-2 text-center" @click="mobileMenuOpen = false">Gallery</a>
+            <a href="#artists" class="block py-2 text-center" @click="mobileMenuOpen = false">Artists</a>
+            <a href="#updates" class="block py-2 text-center" @click="mobileMenuOpen = false">Updates</a>
+            <a href="#blog" class="block py-2 text-center" @click="mobileMenuOpen = false">Blog</a>
+            <a href="#events" class="block py-2 text-center" @click="mobileMenuOpen = false">Events</a>
+            <a href="#register" class="block mt-4 text-center px-4 py-2 rounded-md btn-primary" @click="mobileMenuOpen = false">Register</a>
+        </div>
+    </header>
+
+    <!-- Search Modal -->
+    <dialog id="search-modal" class="p-0 rounded-lg shadow-xl max-w-lg w-full">
+        <div class="p-8">
+            <form onsubmit="event.target.closest('dialog').close(); return false;">
+                <h3 class="font-serif text-2xl mb-4 text-center">Find Art & Artists</h3>
+                <div class="relative">
+                    <input type="search" placeholder="Search for artworks, artists, activities..." class="w-full p-3 pl-10 border rounded-full bg-gray-50 focus:ring-2 focus:ring-gray-800 focus:outline-none">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+                 <button type="submit" class="w-full mt-4 py-2 rounded-full btn-primary">Search</button>
+            </form>
+        </div>
+    </dialog>
+
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-bg">
+            <div class="container mx-auto px-6 py-20 md:py-32 text-center">
+                <h1 class="text-4xl md:text-6xl font-serif font-bold leading-tight mb-4">Where Creativity Finds a Home</h1>
+                <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto mb-8">Discover a curated collection of fine art, join our vibrant community, and explore your own artistic journey.</p>
+                <a href="#store" class="px-8 py-3 rounded-full btn-primary text-lg">Explore Art</a>
+            </div>
+        </section>
+
+        <!-- Art Store -->
+        <section id="store" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-serif font-bold text-center mb-12">Art Store</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Art Piece 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition-all duration-300">
+                        <img src="p22.jpg" alt="Abstract Artwork" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-1">Celestial Dreams</h3>
+                            <p class="text-gray-600 mb-4">By Aleena Khan</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">$450</span>
+                                <button class="px-4 py-2 rounded-md text-sm btn-primary">Inquire</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Art Piece 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition-all duration-300">
+                        <img src="https://placehold.co/600x700/d7e0de/1a1a1a?text=Artwork+2" alt="Landscape Painting" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-1">Misty Mountains</h3>
+                            <p class="text-gray-600 mb-4">By Bilal Ahmed</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">$620</span>
+                                <button class="px-4 py-2 rounded-md text-sm btn-primary">Inquire</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Art Piece 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition-all duration-300">
+                        <img src="https://placehold.co/600x700/e0d7d7/1a1a1a?text=Artwork+3" alt="Portrait" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-1">The Thinker</h3>
+                            <p class="text-gray-600 mb-4">By Fatima Zahra</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">$800</span>
+                                <button class="px-4 py-2 rounded-md text-sm btn-primary">Inquire</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Art Piece 4 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover transition-all duration-300">
+                        <img src="https://placehold.co/600x700/d7d7e0/1a1a1a?text=Artwork+4" alt="Sculpture" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-1">Fluidity</h3>
+                            <p class="text-gray-600 mb-4">By Omar Saif</p>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">$1,250</span>
+                                <button class="px-4 py-2 rounded-md text-sm btn-primary">Inquire</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="#" class="px-6 py-3 rounded-full border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300">View All Art</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Art Gallery Section -->
+        <section id="gallery" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-serif font-bold text-center mb-4">Virtual Gallery</h2>
+                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Step into our curated exhibitions and experience art in a new dimension.</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x800/e2e8f0/334155?text=Exhibit+A" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x600/e2e8f0/334155?text=Exhibit+B" alt=""></div>
+                    </div>
+                    <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x600/e2e8f0/334155?text=Exhibit+C" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x800/e2e8f0/334155?text=Exhibit+D" alt=""></div>
+                    </div>
+                    <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x800/e2e8f0/334155?text=Exhibit+E" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x600/e2e8f0/334155?text=Exhibit+F" alt=""></div>
+                    </div>
+                     <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x600/e2e8f0/334155?text=Exhibit+G" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/500x800/e2e8f0/334155?text=Exhibit+H" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Artists -->
+        <section id="artists" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-serif font-bold text-center mb-12">Featured Artists</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <!-- Artist of the Week -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                         <span class="inline-block bg-gray-800 text-white px-4 py-1 rounded-full text-sm font-semibold mb-4">Artist of the Week</span>
+                        <img src="https://placehold.co/200x200/cbd5e1/475569?text=Artist" alt="Artist of the Week" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                        <h3 class="text-2xl font-bold font-serif">Sana Jaffrey</h3>
+                        <p class="text-gray-600 mt-2 mb-4">A visionary painter known for her vibrant and emotional landscapes that capture the spirit of nature.</p>
+                        <a href="#" class="font-semibold text-gray-800 hover:underline">View Profile & Art <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <!-- Artist of the Month -->
+                    <div class="bg-gray-800 text-white p-8 rounded-lg shadow-lg text-center">
+                         <span class="inline-block bg-white text-gray-800 px-4 py-1 rounded-full text-sm font-semibold mb-4">Artist of the Month</span>
+                        <img src="https://placehold.co/200x200/94a3b8/e2e8f0?text=Artist" alt="Artist of the Month" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-600 shadow-md">
+                        <h3 class="text-2xl font-bold font-serif">Hassan Rizvi</h3>
+                        <p class="text-gray-300 mt-2 mb-4">A master sculptor who transforms raw metal into breathtaking forms, exploring themes of growth and decay.</p>
+                        <a href="#" class="font-semibold text-white hover:underline">View Profile & Art <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updates, Blog, Events -->
+        <section class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    
+                    <!-- Updates & Activities -->
+                    <div id="updates" class="lg:col-span-1">
+                        <h3 class="text-2xl font-serif font-bold mb-6">Updates & Activities</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center"><i class="fas fa-bullhorn text-xl text-gray-600"></i></div>
+                                <div>
+                                    <h4 class="font-semibold">New Exhibition Announced</h4>
+                                    <p class="text-sm text-gray-600">"Colors of Life" opens on Oct 15th. Featuring 20+ local artists.</p>
+                                    <span class="text-xs text-gray-400">2 days ago</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center"><i class="fas fa-paint-brush text-xl text-gray-600"></i></div>
+                                <div>
+                                    <h4 class="font-semibold">Live Painting Session</h4>
+                                    <p class="text-sm text-gray-600">Join Sana Jaffrey this Saturday for a live abstract painting demo.</p>
+                                    <span class="text-xs text-gray-400">4 days ago</span>
+                                </div>
+                            </div>
+                             <div class="flex items-start space-x-4">
+                                <div class="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center"><i class="fas fa-users text-xl text-gray-600"></i></div>
+                                <div>
+                                    <h4 class="font-semibold">Call for Submissions</h4>
+                                    <p class="text-sm text-gray-600">Our winter gallery is now accepting submissions. Deadline Nov 1st.</p>
+                                    <span class="text-xs text-gray-400">1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog -->
+                    <div id="blog" class="lg:col-span-1">
+                        <h3 class="text-2xl font-serif font-bold mb-6">From the Blog</h3>
+                        <div class="space-y-6">
+                            <div class="bg-gray-50 rounded-lg p-4 card-hover transition-all duration-300">
+                                <a href="#">
+                                    <p class="text-sm text-gray-500">Art & Culture</p>
+                                    <h4 class="font-semibold">The Creative Process: A Deep Dive</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Explore the journey from a blank canvas to a masterpiece...</p>
+                                </a>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4 card-hover transition-all duration-300">
+                                <a href="#">
+                                    <p class="text-sm text-gray-500">Studio Life</p>
+                                    <h4 class="font-semibold">Behind the Scenes at Studio Meem</h4>
+                                    <p class="text-sm text-gray-600 mt-1">A sneak peek into our artists' workspaces and daily rituals...</p>
+                                </a>
+                            </div>
+                             <div class="bg-gray-50 rounded-lg p-4 card-hover transition-all duration-300">
+                                <a href="#">
+                                    <p class="text-sm text-gray-500">Tips & Tricks</p>
+                                    <h4 class="font-semibold">5 Ways to Overcome Creative Block</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Practical advice for artists to stay inspired and productive...</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events Calendar -->
+                    <div id="events" class="lg:col-span-1">
+                         <h3 class="text-2xl font-serif font-bold mb-6">Upcoming Events</h3>
+                         <div class="bg-gray-800 text-white rounded-lg p-6">
+                            <div class="space-y-5">
+                                <div class="flex items-center space-x-4">
+                                    <div class="text-center flex-shrink-0">
+                                        <p class="text-sm font-bold">OCT</p>
+                                        <p class="text-2xl font-bold">22</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">Watercolor Workshop</h4>
+                                        <p class="text-sm text-gray
